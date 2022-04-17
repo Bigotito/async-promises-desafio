@@ -5,8 +5,9 @@ import * as jsonfile from "jsonfile";
 
 test("Testeo el load del modelo", (t) => {
   const model = new ContactsCollection();
-  model.load();
-  t.deepEqual(contactsObject, model.getAll());
+  model.load().then(() => {
+    t.deepEqual(contactsObject, model.getAll());
+  });
 });
 
 test("Testeo el addOne del modelo", (t) => {

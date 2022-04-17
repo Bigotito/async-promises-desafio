@@ -7,9 +7,12 @@ export class ContactsControllerOptions {
 
 class ContactsController {
   contacts: ContactsCollection;
+
+  readWritePromise: Promise<any>;
+
   constructor() {
     this.contacts = new ContactsCollection();
-    this.contacts.load();
+    this.readWritePromise = this.contacts.load();
   }
   processOptions(options: ContactsControllerOptions) {
     var resultado;
@@ -19,7 +22,7 @@ class ContactsController {
       resultado = this.contacts.getAll();
     } else if (options.action == "save" && options.params) {
       this.contacts.addOne(options.params);
-      this.contacts.save();
+      this.readWritePromise = this.contacts.save();
     }
     return resultado;
   }
